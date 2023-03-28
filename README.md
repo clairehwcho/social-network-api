@@ -27,6 +27,9 @@ This is an API for a social network web application where users can share their 
   ```
 
 - Walkthrough video
+<video src="https://user-images.githubusercontent.com/106784125/228316662-80ab4e34-8f44-40da-8d36-21375167f3ae.mp4"></video>
+
+
 
 ## License
 Copyright © 2022 [Claire Cho](https://github.com/clairehwcho).
