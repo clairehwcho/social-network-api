@@ -38,8 +38,8 @@ module.exports = {
             })
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: "No user with this id found" })
-                    : res.json(user)
+                    ? res.status(404).json({ message: "Thought created but no user with this id found" })
+                    : res.json({ message: 'Thought created' })
             )
             .catch((err) => {
                 console.log(err);
@@ -53,10 +53,10 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-            .then((user) =>
-                !user
+            .then((thought) =>
+                !thought
                     ? res.status(404).json({ message: 'No thought with this id found' })
-                    : res.json(user)
+                    : res.json(thought)
             )
             .catch((err) => {
                 console.log(err);
@@ -85,13 +85,13 @@ module.exports = {
     createReaction (req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: { reactions: req.params.body } },
+            { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }
         )
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with this id found' })
-                    : res.json(thought)
+                    : res.json({message: 'Reaction created'})
             )
             .catch((err) => {
                 return res.status(500).json(err)
