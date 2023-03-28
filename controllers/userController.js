@@ -48,7 +48,10 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id found' })
-                    : res.json(user)
+                    : res.json({
+                        updatedUser: user,
+                        message: 'User updated'
+                    })
             )
             .catch((err) => {
                 console.log(err);
@@ -58,14 +61,16 @@ module.exports = {
     // Delete a user by its _id
     deleteUser (req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
-            .then((user) =>
-                !user
-                    ? res.status(404).json({ message: 'No user with this id found' })
-                    // Remove a user's associated thoughts when deleted
-                    : Thought.deleteMany({ _id: { $in: user.thoughts } })
-            )
-            .then(() => {
-                return res.json({ message: 'User and thoughts deleted' });
+            .then((user) => {
+                if (!user) {
+                    res.status(404).json({ message: 'No user with this id found' })
+                }
+                // Remove a user's associated thoughts when deleted
+                Thought.deleteMany({ _id: { $in: user.thoughts } })
+                return res.json({
+                    deletedUser: user,
+                    message: 'User and thoughts deleted'
+                });
             })
             .catch((err) => {
                 console.log(err);
@@ -83,7 +88,10 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id found' })
-                    : res.json({ message: 'Friend added' })
+                    : res.json({
+                        updatedUser: user,
+                        message: 'Friend added'
+                    })
             )
             .catch((err) => {
                 return res.status(500).json(err)
@@ -99,7 +107,10 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id found' })
-                    : res.json({ message: 'Friend removed' })
+                    : res.json({
+                        updatedUser: user,
+                        message: 'Friend removed'
+                    })
             )
             .catch((err) => {
                 console.log(err);

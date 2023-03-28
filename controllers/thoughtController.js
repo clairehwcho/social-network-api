@@ -39,7 +39,10 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: "Thought created but no user with this id found" })
-                    : res.json({ message: 'Thought created' })
+                    : res.json({
+                        updatedUser: user,
+                        message: 'Thought added to user'
+                    })
             )
             .catch((err) => {
                 console.log(err);
@@ -56,7 +59,10 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with this id found' })
-                    : res.json(thought)
+                    : res.json({
+                        updatedThought: thought,
+                        message: 'Thought updated'
+                    })
             )
             .catch((err) => {
                 console.log(err);
@@ -78,7 +84,10 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this deleted thought found' })
-                    : res.json({ message: 'Thought deleted' }))
+                    : res.json({
+                        updatedUser: user,
+                        message: 'Thought deleted and removed from user'
+                    }))
             .catch((err) => res.status(500).json(err));
     },
     // Create a reaction
@@ -91,7 +100,9 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with this id found' })
-                    : res.json({message: 'Reaction created'})
+                    : res.json({
+                        updatedThought: thought,
+                        message: 'Reaction created and added to thought' })
             )
             .catch((err) => {
                 return res.status(500).json(err)
@@ -107,7 +118,10 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with this id found' })
-                    : res.json({ message: 'Reaction deleted' })
+                    : res.json({
+                        updatedThought: thought,
+                        message: 'Reaction deleted and removed from thought'
+                    })
             )
             .catch((err) => {
                 console.log(err);
